@@ -112,14 +112,14 @@ const SpinTable = ({ Timer, isBlinking, gameData, prevGames }) => {
             fontSize: "3rem",
           }}
         >
-          {Timer !== "BET CLOSED" && Timer !== "-1:0-1" ? (
+          {Timer !== "BET CLOSED" && Timer !== "-1:0:1" ? (
             <span>{Timer}</span>
           ) : (
             <span
               style={{
                 color: "white",
                 fontFamily: "Roboto",
-                fontWeight: "normal",
+                fontWeight: "normal", 
                 fontSize: "2rem",
               }}
             >
