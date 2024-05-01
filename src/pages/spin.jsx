@@ -14,7 +14,7 @@ import "./app.css";
 import centerCircle from "./asset/center-circle.png";
 import outerCircle from "./asset/outer-circle.png";
 import highlights from "./asset/Highlights.png";
-import NoNetworkPage from "../assets/images/waitingPage.png";
+// import NoNetworkPage from "../assets/images/waitingPage.png";
 
 const Spin = () => {
   const dispatch = useDispatch();
@@ -55,7 +55,7 @@ const Spin = () => {
   const wheelRef = useRef(null);
   const [prevSpinResult, setPrevSpinResult] = useState(null);
   const [spinResult, setSpinResult] = useState(null);
-  const [currentNumber, setCurrentNumber] = useState(prevSpinResult);
+  const [currentNumber, setCurrentNumber] = useState(0);
   const [sequenceIndex, setSequenceIndex] = useState(0);
   const [showPrevSpinResult, setShowPrevSpinResult] = useState(true);
 
@@ -191,6 +191,7 @@ const Spin = () => {
             }, 50);
           }
         }
+        setIsBlinking(false);
       } catch (error) {
         console.error("Error fetching spin result:", error);
         if (time === -3) {
@@ -200,9 +201,11 @@ const Spin = () => {
     };
 
     const timer = setInterval(() => {
-      if (time <= 11 && time > -3 && currentState === "pending") {
-        setTime((prevTime) => prevTime - 1);
+      if (time <= 11) {
         setIsBlinking(true);
+      }
+      if (time <= 0 && time > -3 && currentState === "pending") {
+        setTime((prevTime) => prevTime - 1);
         fetchSpinResult();
       } else if (time > 0 && currentState === "pending") {
         setTime((prevTime) => prevTime - 1);
@@ -210,6 +213,7 @@ const Spin = () => {
         setIsBlinking(false);
         setTime(-1);
       } else if (time === -3 && currentState === "pending") {
+        setIsBlinking(false);
         handleTransitionEnd();
       }
     }, 1000);
@@ -220,6 +224,7 @@ const Spin = () => {
   const formatTime = () => {
     const minutes = time > 0 ? Math.floor(time / 60) : 0;
     const seconds = time > 0 ? time % 60 : 0;
+
     return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   };
 
@@ -230,6 +235,9 @@ const Spin = () => {
       if (response.payload.spinnData.endTime && response.payload.serverTime) {
         const endTime = new Date(response.payload.spinnData.endTime).getTime();
         const serverTime = new Date(response.payload.serverTime).getTime();
+        console.log(`serverTime: ${serverTime}`);
+        console.log(`endTime: ${endTime}`);
+        console.log(Math.round((endTime - serverTime) / 1000));
 
         timeDifferenceInSeconds = Math.round((endTime - serverTime) / 1000);
         setTime(timeDifferenceInSeconds);
@@ -241,6 +249,7 @@ const Spin = () => {
           prevSpinResult
         ]}deg)`;
         setPrevSpinResult(prevSpinResult);
+        setCurrentNumber(0);
       }
     } catch (e) {
       setError(!error);
