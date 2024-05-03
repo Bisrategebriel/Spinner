@@ -202,3 +202,21 @@
   bottom: 50%;
   right: 50%;
 }
+
+@keyframes spin1 {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(10deg); }
+}
+
+.vibrating {
+  animation: vibration 0.3s ease-in-out infinite forwards;
+}
+
+@keyframes vibration {
+  0% {
+    transform:  rotate(0.0deg);
+  }
+  100% {
+    transform:  rotate(30deg);
+  }
+}
