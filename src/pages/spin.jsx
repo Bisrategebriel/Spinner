@@ -401,9 +401,9 @@ const Spin = () => {
                 <img
                   src={pointer}
                   alt="marker"
-                  className={`w-9 h-10 absolute top-9 left-1/2 transform -translate-x-1/2 -translate-y-full transition-all duration-100 ${
+                  className={`w-9 h-10 absolute top-9 left-[50%] transform -translate-x-1/2 -translate-y-full transition-all duration-100 ${
                     currentState === "spinning"
-                      ? "rotate-45 vibrating -top-[5px] -translate-x-2"
+                      ? "rotate-45 left-[47%] vibrating -top-[5px] md:top-[0px] -translate-x-2"
                       : ""
                   }`}
                   style={{
