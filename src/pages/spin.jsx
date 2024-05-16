@@ -331,7 +331,7 @@ const Spin = () => {
   const screenHeight = window.screen.height;
 
   useEffect(() => {
-    if (screenWidth !== 1280 && screenHeight !== 720) {
+    if (screenWidth !== 1280 || screenHeight !== 720) {
       setDisplayWarning(true);
     } else {
       setDisplayWarning(false);
@@ -403,7 +403,7 @@ const Spin = () => {
                   alt="marker"
                   className={`w-9 h-10 absolute top-9 left-[50%] transform -translate-x-1/2 -translate-y-full transition-all duration-100 ${
                     currentState === "spinning"
-                      ? "rotate-45 left-[47%] vibrating -top-[5px] md:top-[0px] -translate-x-2"
+                      ? " left-[240px] vibrating -top-0 "
                       : ""
                   }`}
                   style={{
